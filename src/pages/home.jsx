@@ -5,7 +5,7 @@ function Home() {
     const [loading, setLoading] = useState(true);
   useEffect(() => {
     setLoading(true);
-    fetch(`https://api.jikan.moe/v4/anime`)
+    fetch(`https://api.jikan.moe/v4/anime?q=&status=airing&type=tv&order_by=popularity&sort=asc`)
     .then((res) => res.json())
     .then((data) => {
       setAnime(data.data);
