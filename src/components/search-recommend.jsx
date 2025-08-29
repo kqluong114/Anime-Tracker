@@ -39,13 +39,19 @@ function SearchRecommend({search}) {
   }, [debouncedSearch]);
 
   return (
-    <div className="absolute border mt-1 rounded shadow-lg w-70 bg-white">
-      { recommendedSearch.map((item) => (
-        <div key={item.mal_id} className="inline-flex items-center p-1 hover:bg-green-200 w-full">
-          <img className="w-10 pr-1" src={item.images.jpg.image_url} />{item.title}
+    <>
+      {recommendedSearch.length > 0 ? (
+        <div className="absolute border mt-1 rounded shadow-lg w-70 bg-white">
+          { recommendedSearch.map((item) => (
+            <div key={item.mal_id} className="inline-flex items-center p-1 hover:bg-green-200 w-full">
+              <img className="w-10 pr-1" src={item.images.jpg.image_url} />{item.title}
+            </div>
+          ))}
         </div>
-      ))}
-    </div>
+        ) : (
+        <></>
+    )}
+    </>
   )
 }
 

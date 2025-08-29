@@ -1,22 +1,44 @@
 import { useEffect, useState } from 'react'
+import { Link, useParams } from 'react-router-dom';
 
 function Home() {
   const [anime, setAnime] = useState([]);
-    const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState("");
+
+  let params = useParams();
   useEffect(() => {
     setLoading(true);
-    fetch(`https://api.jikan.moe/v4/anime?q=&status=airing&type=tv&order_by=popularity&sort=asc`)
-    .then((res) => res.json())
-    .then((data) => {
-      setAnime(data.data);
-      setLoading(false);
-      console.log(data);
-    })
-    .catch((err) => {
-      console.error(err);
-      setLoading(false);
-    });
-  }, [])
+    params.q ? setSearch(params.q) : setSearch("");
+    console.log("search = ", params);
+
+    if(search) {
+      fetch(`https://api.jikan.moe/v4/anime?q=${search}&status=airing&type=tv&order_by=popularity&sort=asc`)
+      .then((res) => res.json())
+      .then((data) => {
+        setAnime(data.data);
+        setLoading(false);
+        console.log(data);
+      })
+      .catch((err) => {
+        console.error(err);
+        setLoading(false);
+      });
+    }
+    else {
+      fetch(`https://api.jikan.moe/v4/anime?q=&status=airing&type=tv&order_by=popularity&sort=asc`)
+      .then((res) => res.json())
+      .then((data) => {
+        setAnime(data.data);
+        setLoading(false);
+        console.log(data);
+      })
+      .catch((err) => {
+        console.error(err);
+        setLoading(false);
+      });
+    }
+  }, [search])
 
   return (
       <>
@@ -29,7 +51,7 @@ function Home() {
               <div key={item.mal_id} className="rounded border-1">
                 <img className="w-full" src={item.images.jpg.image_url} alt={item.title} />
                 <div className="px-6 py-4">
-                  <div className="font-bold text-xl mb-2">{item.title}</div>
+                  <Link to={`/anime/${item.mal_id}`} className="font-bold text-xl mb-2">{item.title}</Link>
                   <p className="text-gray-700 text-base">
                     {item.synopsis ? item.synopsis.substring(0, 100) + '...' : 'No synopsis available.'}
                   </p>

@@ -1,10 +1,20 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import '../styles/App.css';
 import SearchRecommend from "./search-recommend.jsx";
 
+
+
 function MenuBar() {
   const [search, setSearch] = useState("");
+  const navigate = useNavigate();
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if(search.trim()) {
+      navigate(`/home?q=${search}`);  // Navigate to search page with query
+    }
+  }
 
   return (
     <nav>
@@ -17,7 +27,7 @@ function MenuBar() {
         <li><a className="btn" href="/Manga">Manga</a></li>
         <li><a className="btn" href="/Profile">Profile</a></li>
         <li>
-            <form action="">
+            <form onSubmit={handleSearch}>
               <input 
                 className="border px-2 py-1 rounded" 
                 type="text" 
