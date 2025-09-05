@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 
 function Anime() {
   const [data, setData] = useState({});
-  let params = useParams();
+  const params = useParams();
   useEffect(() => {
     fetch(`https://api.jikan.moe/v4/anime/${params.id}`)
     .then((res) => res.json())

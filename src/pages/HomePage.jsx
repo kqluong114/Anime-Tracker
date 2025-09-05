@@ -6,13 +6,14 @@ function Home() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
 
-  let params = useParams();
+  // let params = useParams();
   useEffect(() => {
     setLoading(true);
-    params.q ? setSearch(params.q) : setSearch("");
-    console.log("search = ", params);
-
+    // params.q ? setSearch(params.q) : setSearch("");
+    setSearch("");
+    
     if(search) {
+      // console.log("search = ", params);
       fetch(`https://api.jikan.moe/v4/anime?q=${search}&status=airing&type=tv&order_by=popularity&sort=asc`)
       .then((res) => res.json())
       .then((data) => {
@@ -26,6 +27,7 @@ function Home() {
       });
     }
     else {
+      console.log("no search");
       fetch(`https://api.jikan.moe/v4/anime?q=&status=airing&type=tv&order_by=popularity&sort=asc`)
       .then((res) => res.json())
       .then((data) => {
