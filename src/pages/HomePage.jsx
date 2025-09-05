@@ -5,28 +5,28 @@ function Home() {
   const [anime, setAnime] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
-
+  
   // let params = useParams();
   useEffect(() => {
     setLoading(true);
-    // params.q ? setSearch(params.q) : setSearch("");
     setSearch("");
+    // params.q ? setSearch(params.q) : setSearch("");
     
-    if(search) {
-      // console.log("search = ", params);
-      fetch(`https://api.jikan.moe/v4/anime?q=${search}&status=airing&type=tv&order_by=popularity&sort=asc`)
-      .then((res) => res.json())
-      .then((data) => {
-        setAnime(data.data);
-        setLoading(false);
-        console.log(data);
-      })
-      .catch((err) => {
-        console.error(err);
-        setLoading(false);
-      });
-    }
-    else {
+    // if(search) {
+    //   // console.log("search = ", params);
+    //   fetch(`https://api.jikan.moe/v4/anime?q=${search}&status=airing&type=tv&order_by=popularity&sort=asc`)
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     setAnime(data.data);
+    //     setLoading(false);
+    //     console.log(data);
+    //   })
+    //   .catch((err) => {
+    //     console.error(err);
+    //     setLoading(false);
+    //   });
+    // }
+    // else {
       console.log("no search");
       fetch(`https://api.jikan.moe/v4/anime?q=&status=airing&type=tv&order_by=popularity&sort=asc`)
       .then((res) => res.json())
@@ -39,8 +39,8 @@ function Home() {
         console.error(err);
         setLoading(false);
       });
-    }
-  }, [search])
+    // }
+  }, [])
 
   return (
       <>

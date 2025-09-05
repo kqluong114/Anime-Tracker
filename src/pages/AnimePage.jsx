@@ -5,7 +5,7 @@ function Anime() {
   const [data, setData] = useState({});
   const params = useParams();
   useEffect(() => {
-    fetch(`https://api.jikan.moe/v4/anime/${params.id}`)
+    fetch(`https://api.jikan.moe/v4/anime/${params.animeId}`)
     .then((res) => res.json())
     .then((data) => {
       setData(data.data);
