@@ -8,6 +8,7 @@ import MenuBar from './components/MenuBar.jsx';
 import Home from './pages/HomePage.jsx';
 import Anime from './pages/AnimePage.jsx';
 import NotFound from './pages/NotFoundPage.jsx';
+import AnimeSearch from './pages/AnimeSearchPage.jsx';
 
 let router = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ let router = createBrowserRouter([
       {
         path: "anime/:animeId",
         element: <Anime />,
+      },
+      {
+        path: "animeSearch/",
+        element: <AnimeSearch />,
       },
     ]
   },
