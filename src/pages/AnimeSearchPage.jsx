@@ -1,32 +1,67 @@
 import { useSearchParams, Link } from 'react-router-dom';
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 function AnimeSearch() {
-  const [data, setData] = useState({});
+  const [shows, setShows] = useState({});
   const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const [scroll, setScroll] = useState(0);
   let [searchParams] = useSearchParams();
   useSearchParams({ q: "" });
 
   const query = searchParams.get("q") ?? "";
   const filter = searchParams.get("filter") ?? "popularity";
+  const url = `https://api.jikan.moe/v4/anime?q=${query}&order_by=${filter}&sort=asc&page=${page}`;
+  const buffer = 1000;
+  window.onscroll = () => {
+    setScroll(window.pageYOffset);
+    console.log(scroll + window.innerHeight + buffer);
+  }
 
   useEffect(() => {
-    fetch(`https://api.jikan.moe/v4/anime?q=${query}&order_by=${filter}&sort=asc`)
+    fetch(url)
       .then((res) => res.json())
       .then((data) => {
-        setData(data.data);
+        setShows(data.data);
         setLoading(false);
       })
   }, [query, filter]);
+
+  let showsRef = useRef(shows);
+  useEffect(() => {
+    if(window.innerHeight + window.scrollY + buffer >= document.body.offsetHeight && !loadingRef.current) {
+      setLoading(true);
+      console.log('bottom reached');
+      setPage((prev) => prev + 1);
+      fetch(url)
+        .then((res) => res.json())
+        .then((data) => {
+          setShows((prev) => [...prev, ...data.data]);
+          console.log(showsRef.current);
+          // setShows(data.data);
+          setLoading(false);
+        })
+    }
+  }, [scroll]);
+
+  let pageRef = useRef(page);
+  useEffect(() => {
+    pageRef.current = page;
+  }, [page]);
+
+  let loadingRef = useRef(loading);
+  useEffect(() => {
+    loadingRef.current = loading;
+  }, [loading]);
 
   return (
     <>
       {loading ? (
         <p>Loading...</p>
       ) : (
-        data.length > 0 ? (
+        shows.length > 0 ? (
           <div className="mx-auto max-w-5xl content-center grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            {data.map((item) => (
+            {shows.map((item) => (
               <div key={item.mal_id} className="rounded border-1">
                 <img className="w-full" src={item.images.jpg.image_url} alt={item.title} />
                 <div className="px-6 py-4">
@@ -46,6 +81,7 @@ function AnimeSearch() {
           <p>No results found for "{query}"</p>
         )
       )}
+      
     </>
   );
 }
