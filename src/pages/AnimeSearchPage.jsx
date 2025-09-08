@@ -2,7 +2,7 @@ import { useSearchParams, Link } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react'
 
 function AnimeSearch() {
-  const [shows, setShows] = useState({});
+  const [shows, setShows] = useState([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [scroll, setScroll] = useState(0);
@@ -36,8 +36,17 @@ function AnimeSearch() {
       fetch(url)
         .then((res) => res.json())
         .then((data) => {
-          setShows((prev) => [...prev, ...data.data]);
-          console.log(showsRef.current);
+          setShows((prev) => {
+            // let newData = data.data.filter((item) => !prev.some((prev) => prev.mal_id === item.mal_id));
+            // return [...prev, ...newData];
+            const extistingIds = new Set(prev.map(item => item.mal_id));
+            const newItems = data.data.filter(item => !extistingIds.has(item.mal_id));
+            return [...prev, ...newItems];
+          });
+          
+          // showsRef.current = shows;
+          // console.log(`shows = ${JSON.stringify(showsRef.current, null, 2)}`);
+          // console.log(data.data);
           // setShows(data.data);
           setLoading(false);
         })
