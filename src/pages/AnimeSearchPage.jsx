@@ -52,8 +52,71 @@ function AnimeSearch() {
     return () => (subscribed = false);
   }, [query, filter]);
 
+  const genres = [
+    "Action", "Adventure", "Comedy", "Drama", "Ecchi", "Fantasy", "Harem",
+    "Historical", "Horror", "Isekai", "Mecha", "Military", "Music", "Mystery",
+    "Psychological", "Romance", "School", "Sci-Fi", "Seinen", "Shoujo",
+    "Shounen", "Slice of Life", "Sports", "Supernatural", "Thriller"
+  ];
+
+  const genreIds = {
+    Action: 1,
+    Adventure: 2,
+    Comedy: 4,
+    Drama: 8,
+    Ecchi: 10,
+    Fantasy: 12,
+    Harem: 13,
+    Historical: 14,
+    Horror: 15,
+    Isekai: 16,
+    Mecha: 17,
+    Military: 18,
+    Music: 19,
+    Mystery: 20,
+    Psychological: 21,
+    Romance: 22,
+    School: 23,
+    SciFi: 24,
+    Seinen: 25,
+    Shoujo: 26,
+    Shounen: 27,
+    SliceOfLife: 28,
+    Sports: 29,
+    Supernatural: 30,
+    Thriller: 31
+  };
+
+  // const async handleGenreClick = (genre) => {
+  //   try {
+  //     const res = await fetch(`https://api.jikan.moe/v4/anime?genres=${genre}&order_by=popularity&sort=asc&page=1`);
+  //     const data = await res.json();
+  //     if (res.ok) {
+  //       setShows(data.data);
+  //       setPage(1);
+  //     }
+  //   }
+  //   catch (err) {
+  //     console.error(err);
+  //   }
+  // }
+
+  function GenreButton({children}) {
+    return <button 
+    className='border rounded-2x1 hover:bg-blue-200'
+    // onClick={handleGenreClick}
+    >
+      {children}
+    </button>
+  }
+
   return (
     <>
+      <div>Filters</div>
+      <div>Genres</div>
+      <div className='flex-wrap flex gap-2 mb-4'>
+        {genres.map((genre) => <GenreButton key={genre}>{genre}</GenreButton>)}
+      </div>
       <InfiniteScroll
         dataLength={() => shows.length} //This is important field to render the next data
         next={() => {
