@@ -1,7 +1,12 @@
 @import "tailwindcss";
+@plugin "tailwind-scrollbar";
+
+* {
+    @apply scrollbar scrollbar-thumb-[oklch(1_.08_174)];
+}
 
 body {
-    @apply bg-[oklch(0.3_0.02_274)]
+    @apply bg-[oklch(0.3_0.02_274)];
 }
 
 .btn {
@@ -12,10 +17,7 @@ body {
     @apply max-w-sm rounded overflow-hidden shadow-lg gap-4;
 } */
 
-/* :root {
-    --oklch-10: oklch(0.1 0.15 280)
-    --oklch-10: oklch(0.1 0.15 280)
-    --oklch-10: oklch(0.1 0.15 280)
-    --oklch-10: oklch(0.1 0.15 280)
-    --oklch-10: oklch(0.1 0.15 280)
-} */
+// colors
+// green: text-[oklch(1_.08_174)] 
+// pink: bg-[oklch(.7_.1_1.2)]
+// bg: bg-[oklch(.3_.02_274)]
