@@ -6,12 +6,13 @@ function AnimeSearch() {
   const [shows, setShows] = useState([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
+  // const [url, setUrl] = useState("");
   let [searchParams] = useSearchParams();
   useSearchParams({ q: "" });
 
-  const query = searchParams.get("q") ?? "";
-  const filter = searchParams.get("filter") ?? "popularity";
-  const url = `https://api.jikan.moe/v4/anime?q=${query}&order_by=${filter}&sort=asc&page=${page}`;
+  let query = searchParams.get("q") ?? "";
+  let filter = searchParams.get("filter") ?? "popularity";
+  let url = `https://api.jikan.moe/v4/anime?q=${query}&order_by=${filter}&sort=asc&page=${page}`;
 
   let pageRef = useRef(page);
   useEffect(() => {
@@ -50,7 +51,7 @@ function AnimeSearch() {
       }
     })();
     return () => (subscribed = false);
-  }, [query, filter]);
+  }, [url]);
 
   const genres = [
     "Action", "Adventure", "Comedy", "Drama", "Ecchi", "Fantasy", "Harem",
@@ -87,24 +88,26 @@ function AnimeSearch() {
     Thriller: 31
   };
 
-  // const async handleGenreClick = (genre) => {
-  //   try {
-  //     const res = await fetch(`https://api.jikan.moe/v4/anime?genres=${genre}&order_by=popularity&sort=asc&page=1`);
-  //     const data = await res.json();
-  //     if (res.ok) {
-  //       setShows(data.data);
-  //       setPage(1);
-  //     }
-  //   }
-  //   catch (err) {
-  //     console.error(err);
-  //   }
-  // }
+  const handleGenreClick = async (genre) => {
+    try {
+      let genreId = genreIds[genre];
+      url += `&genres=${genreId}`;
+      const res = await fetch(url);
+      const data = await res.json();
+      if (res.ok) {
+        setShows(data.data);
+        setPage(1);
+      }
+    }
+    catch (err) {
+      console.error(err);
+    }
+  }
 
   function GenreButton({children}) {
     return <button 
     className='border rounded-2x1 hover:bg-blue-200'
-    // onClick={handleGenreClick}
+    onClick={handleGenreClick}
     >
       {children}
     </button>
@@ -132,19 +135,21 @@ function AnimeSearch() {
           </p>
         }
       >
-        <div className="mx-auto max-w-5xl content-center grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        <div className="mx-auto flex flex-wrap gap-2 justify-center">
           {shows.map((item) => (
-            <div key={item.mal_id} className="rounded border-1">
-              <img className="w-full" src={item.images.jpg.image_url} alt={item.title} />
-              <div className="px-6 py-4">
-                <Link to={`/anime/${item.mal_id}`} className="font-bold text-xl mb-2">{item.title}</Link>
-                <p className="text-gray-700 text-base">
+            <div key={item.mal_id} className="rounded w-[300px]">
+              <div className='relative h-3/4'>
+                <img className="w-full h-full overflow-hidden object-cover" src={item.images.jpg.image_url} alt={item.title} />
+                <div className="absolute bottom-1.5 left-1.5 flex p-0 gap-0.5 w-auto text-xs">
+                  <span className="bg-[oklch(.9_.08_174)] text-black text-bold w-fit rounded-l-md p-1">Score: {item.score}</span>
+                  <span className="bg-[oklch(.9_.2_1)] text-black text-bold w-fit rounded-r-md p-1">Episodes: {item.episodes}</span>
+                </div>
+              </div>
+              <div className="py-4">
+                <Link to={`/anime/${item.mal_id}`} className="font-bold text-base mb-2 line-clamp-1">{item.title}</Link>
+                <p className="text-gray-700 text-xs">
                   {item.synopsis ? item.synopsis.substring(0, 100) + '...' : 'No synopsis available.'}
                 </p>
-              </div>
-              <div className="px-6 pt-4 pb-2">
-                <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Score: {item.score}</span>
-                <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Episodes: {item.episodes}</span>
               </div>
             </div>
           ))}

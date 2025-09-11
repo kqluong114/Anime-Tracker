@@ -1,9 +1,21 @@
 @import "tailwindcss";
 
+body {
+    @apply bg-[oklch(0.3_0.02_274)]
+}
+
 .btn {
     @apply bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded;
 }
 
-.anime-card {
+/* .anime-card {
     @apply max-w-sm rounded overflow-hidden shadow-lg gap-4;
-}
+} */
+
+/* :root {
+    --oklch-10: oklch(0.1 0.15 280)
+    --oklch-10: oklch(0.1 0.15 280)
+    --oklch-10: oklch(0.1 0.15 280)
+    --oklch-10: oklch(0.1 0.15 280)
+    --oklch-10: oklch(0.1 0.15 280)
+} */

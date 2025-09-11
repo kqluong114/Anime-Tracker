@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { MagnifyingGlassIcon } from "@heroicons/react/16/solid";
+
 import '../styles/App.css';
 // import SearchRecommend from "./SearchReccomend.jsx";
 
@@ -43,18 +45,23 @@ function MenuBar() {
 
   return (
     <>
-      <div>MySite</div>
-
       {/* Menu items */}
-      <ul className="flex space-x-4 content-center mx-auto max-w-5xl">
-        <li><Link className="btn" to="/">Home</Link></li>
-        <li><Link className="btn" to="/Anime">Anime</Link></li>
-        <li><Link className="btn" to="/Manga">Manga</Link></li>
-        <li><Link className="btn" to="/Profile">Profile</Link></li>
-        <li>
-          <form onSubmit={handleSearch}>
+      <div className="flex space-x-7 bg-[oklch(.3_.02_274)]/90 backdrop-blur-xs backdrop:brightness-0 px-4 py-2 sticky top-0 z-10 bg-[oklcd()] justify-between w-full items-center ">
+        <div className="flex gap-2">
+          <Link className="transition-all duration-250 hover:text-[oklch(1_.08_174)] 
+          border-b-2 border-transparent hover:border-[oklch(1_.08_174)]" to="/">Home</Link>
+          <Link className="transition-all duration-250 hover:text-[oklch(1_.08_174)] 
+          border-b-2 border-transparent hover:border-[oklch(1_.08_174)]" to="/Anime">Anime</Link>
+          <Link className="transition-all duration-250 hover:text-[oklch(1_.08_174)] 
+          border-b-2 border-transparent hover:border-[oklch(1_.08_174)]" to="/Manga">Manga</Link>
+          <Link className="transition-all duration-250 hover:text-[oklch(1_.08_174)] 
+          border-b-2 border-transparent hover:border-[oklch(1_.08_174)]" to="/Profile">Profile</Link>
+        </div>
+        {/* Search Form */}
+        <div className="relative flex align-middle">
+          <form className="text-black" onSubmit={handleSearch}>
             <input
-              className="border px-2 py-1 rounded"
+              className="transition-all duration-250 border-2 border-transparent focus:border-[oklch(.8_.08_174)] pl-2 py-1 pr-6 rounded text-black bg-white outline-0"
               type="text"
               value={search}
               placeholder="Search"
@@ -64,13 +71,11 @@ function MenuBar() {
                 setSearch(e.target.value)
               }}
             />
-            <button className="btn" type="submit">Search</button>
+            <MagnifyingGlassIcon className="inline-block w-6 right-0 text-[oklch(1_.08_174)]" />
           </form>
           {/* Search Reccommendations */}
           {searchFocused && searchResults.length > 0 ? (
-            <div
-              className="absolute border mt-1 rounded shadow-lg w-70 bg-white"
-            >
+            <div className="absolute border mt-1 rounded shadow-lg w-70 bg-[oklch(0.3_0.02_274)]">
               {searchResults.map((show) => (
                 <div key={show.mal_id} className="inline-flex items-center p-1 hover:bg-green-200 w-full">
                   <img className="w-10 pr-1" src={show.images.jpg.image_url} alt={show.title} />
@@ -83,10 +88,11 @@ function MenuBar() {
               ))}
             </div>
           ) : null}
-        </li>
-        <li><a className="btn" href="/Login">Login</a></li>
-        <li><a className="btn" href="/SignUp">Sign Up</a></li>
-      </ul>
+        </div>
+        <div>
+          <a className="transition-colors duration-250 p-2 rounded-md text-black font-bold bg-[oklch(.90_.08_174)] hover:bg-[oklch(.85_.08_174)]" href="/Login">Login</a>
+        </div>
+      </div>
     </>
   );
 }
