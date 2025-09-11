@@ -2,7 +2,16 @@
 @plugin "tailwind-scrollbar";
 
 * {
-    @apply scrollbar scrollbar-thumb-[oklch(1_.08_174)];
+    @apply scrollbar scrollbar-thumb-[oklch(1_.08_174/.8)];
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track{
+    radius: 0;
+    background: oklch(.7 0 0 / .2);
 }
 
 body {

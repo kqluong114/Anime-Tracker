@@ -144,8 +144,8 @@ function AnimeSearch() {
                 <div className="group absolute p-2 transition-all duration-200 w-full h-full  hover:bg-[oklch(.4_.08_174)]/50 hover:backdrop-blur-xl">
                   <div className="flex flex-col gap-2 transition-all duration-200 text-xs opacity-0 text-ellipsis group-hover:opacity-100">
                     <div>
-                      <p className="text-sm">Synopsis</p>
-                      <p className=" scrollbar scrollbar-thumb-[oklch(.9_.08_174)] overflow-auto max-h-20 text-[oklch(.9_0_0)]">{item.synopsis ? item.synopsis : 'No synopsis available.'}</p>
+                      <p className="text-sm text-bold">Synopsis</p>
+                      <p className="overflow-auto max-h-20 text-[oklch(.9_0_0)] p-1 rounded bg-black/5">{item.synopsis ? item.synopsis : 'No synopsis available.'}</p>
                     </div>
                     <p className="line-clamp-3">Genres: <span className="text-[oklch(.9_0_0)]">{item.genres.map(genre => genre.name).join(", ")}</span></p>
                   </div>
