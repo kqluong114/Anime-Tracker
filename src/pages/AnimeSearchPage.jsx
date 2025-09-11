@@ -1,6 +1,7 @@
 import { useSearchParams, Link } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { StarIcon, FilmIcon } from '@heroicons/react/16/solid';
 
 function AnimeSearch() {
   const [shows, setShows] = useState([]);
@@ -141,8 +142,12 @@ function AnimeSearch() {
               <div className='relative h-3/4'>
                 <img className="w-full h-full overflow-hidden object-cover" src={item.images.jpg.image_url} alt={item.title} />
                 <div className="absolute bottom-1.5 left-1.5 flex p-0 gap-0.5 w-auto text-xs">
-                  <span className="bg-[oklch(.9_.08_174)] text-black text-bold w-fit rounded-l-md p-1">Score: {item.score}</span>
-                  <span className="bg-[oklch(.9_.2_1)] text-black text-bold w-fit rounded-r-md p-1">Episodes: {item.episodes}</span>
+                  <div className="bg-[oklch(.9_.08_174)] flex gap-1 justify-center text-black text-bold w-fit rounded-l-md p-1">
+                    <StarIcon className="w-4 content-center" /> <span className="content-center">{item.score ? item.score + "/10": "N/A"}</span>
+                  </div>
+                  <div className="bg-[oklch(.9_.2_1)] flex gap-1 justify-center text-black text-bold w-fit rounded-r-md p-1">
+                    <FilmIcon className="w-4 content-center" /> <span>{item.episodes ? item.episodes : 0}</span>
+                  </div>
                 </div>
               </div>
               <div className="py-4">

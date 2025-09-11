@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { MagnifyingGlassIcon } from "@heroicons/react/16/solid";
+import { MagnifyingGlassIcon, StarIcon, FilmIcon } from "@heroicons/react/16/solid";
 
 import '../styles/App.css';
 // import SearchRecommend from "./SearchReccomend.jsx";
@@ -58,10 +58,10 @@ function MenuBar() {
           border-b-2 border-transparent hover:border-[oklch(1_.08_174)]" to="/Profile">Profile</Link>
         </div>
         {/* Search Form */}
-        <div className="relative flex align-middle">
-          <form className="text-black" onSubmit={handleSearch}>
+        <div className="flex align-middle">
+          <form className="relative text-black" onSubmit={handleSearch}>
             <input
-              className="transition-all duration-250 border-2 border-transparent focus:border-[oklch(.8_.08_174)] pl-2 py-1 pr-6 rounded text-black bg-white outline-0"
+              className="transition-color duration-250 border-2 border-transparent focus:rounded-b-none focus:border-[oklch(.8_.08_174)] pl-2 py-1 pr-6 rounded text-black bg-white outline-0"
               type="text"
               value={search}
               placeholder="Search"
@@ -71,23 +71,33 @@ function MenuBar() {
                 setSearch(e.target.value)
               }}
             />
-            <MagnifyingGlassIcon className="inline-block w-6 right-0 text-[oklch(1_.08_174)]" />
+            {/* Search Recommendations */}
+            {searchFocused && searchResults.length > 0 ? (
+              <div className="absolute shadow-2xs w-full top-8 border mt-1 rounded-b-md bg-[oklch(0.35_0.04_274)]">
+                {searchResults.map((show) => (
+                  <div key={show.mal_id} className="flex justify-items-start duration-250 rounded text-xs text-bold text-white p-1 hover:bg-[oklch(0.4_0.02_274)] hover:text-[oklch(6_.08_174)] w-full">
+                    <img className="inline-block w-10 pr-1" src={show.images.jpg.image_url} alt={show.title} />
+                    <div className="inline-flex min-w-0 flex-col justify-between justify-items-start">
+                      <Link
+                        to={`/Anime/${show.mal_id}`}
+                        onMouseDown={(e) => e.preventDefault()}>
+                        <span className="truncate block">{show.title}</span>
+                      </Link>
+                      <div className="flex p-0 gap-0.5 w-auto text-4xs">
+                        <div className="bg-[oklch(.9_.08_174)] flex gap-1 justify-center text-black text-bold w-fit rounded-l-md p-1">
+                          <StarIcon className="w-2 content-center" /> <span className="content-center">{show.score ? show.score + "/10" : "N/A"}</span>
+                        </div>
+                        <div className="bg-[oklch(.9_.2_1)] flex gap-1 justify-center text-black text-bold w-fit rounded-r-md p-1">
+                          <FilmIcon className="w-2 content-center" /> <span className="text-100xs">{show.episodes ? show.episodes : 0}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : null}
           </form>
-          {/* Search Reccommendations */}
-          {searchFocused && searchResults.length > 0 ? (
-            <div className="absolute border mt-1 rounded shadow-lg w-70 bg-[oklch(0.3_0.02_274)]">
-              {searchResults.map((show) => (
-                <div key={show.mal_id} className="inline-flex items-center p-1 hover:bg-green-200 w-full">
-                  <img className="w-10 pr-1" src={show.images.jpg.image_url} alt={show.title} />
-                  <Link 
-                  to={`/Anime/${show.mal_id}`}
-                  onMouseDown={(e) => e.preventDefault()}>
-                  {show.title}
-                  </Link>
-                </div>
-              ))}
-            </div>
-          ) : null}
+          <MagnifyingGlassIcon className="inline-block w-6 right-0 text-[oklch(1_.08_174)]" />
         </div>
         <div>
           <a className="transition-colors duration-250 p-2 rounded-md text-black font-bold bg-[oklch(.90_.08_174)] hover:bg-[oklch(.85_.08_174)]" href="/Login">Login</a>
