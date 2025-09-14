@@ -48,20 +48,12 @@ function MenuBar() {
   return (
     <>
       {/* Menu items */}
-      <div className="flex space-x-7 bg-[oklch(.3_.02_274)]/90 backdrop-blur-xs backdrop:brightness-0 px-4 py-2 sticky top-0 z-10 bg-[oklcd()] justify-between w-full items-center ">
+      <div className="flex h-12 space-x-7 bg-[oklch(.3_.02_274)]/90 backdrop-blur-xs backdrop:brightness-0 px-4 py-2 fixed top-0 z-10 justify-between w-full items-center ">
         <div className="flex gap-2">
-          {/* <Link className="transition-all duration-250 hover:text-[oklch(1_.08_174)] 
-          border-b-2 border-transparent hover:border-[oklch(1_.08_174)]" to="/">Home</Link>
-          <Link className="transition-all duration-250 hover:text-[oklch(1_.08_174)] 
-          border-b-2 border-transparent hover:border-[oklch(1_.08_174)]" to="/Anime">Anime</Link>
-          <Link className="transition-all duration-250 hover:text-[oklch(1_.08_174)] 
-          border-b-2 border-transparent hover:border-[oklch(1_.08_174)]" to="/Manga">Manga</Link>
-          <Link className="transition-all duration-250 hover:text-[oklch(1_.08_174)] 
-          border-b-2 border-transparent hover:border-[oklch(1_.08_174)]" to="/Profile">Profile</Link> */}
           {menuItems.map((item) => {
             return (
               <Link className="transition-all duration-250 hover:text-[oklch(1_.08_174)] 
-              border-b-2 border-transparent hover:border-[oklch(1_.08_174)]" to={item === "Home" ? "/" : "/" + item.toLowerCase()}>{item}</Link>
+              border-b-2 border-transparent hover:border-[oklch(1_.08_174)]" key={item} to={item === "Home" ? "/" : "/" + item.toLowerCase()}>{item}</Link>
             )
           })}
         </div>
@@ -111,6 +103,7 @@ function MenuBar() {
           <a className="transition-colors duration-250 p-2 rounded-md text-black font-bold bg-[oklch(.90_.08_174)] hover:bg-[oklch(.85_.08_174)]" href="/Login">Login</a>
         </div>
       </div>
+      <div className="h-12"></div>
     </>
   );
 }
