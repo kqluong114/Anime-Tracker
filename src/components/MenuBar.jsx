@@ -43,19 +43,27 @@ function MenuBar() {
       .catch((err) => { console.error(err); });
   }, [debouncedSearch]);
 
+  const menuItems = ["Home", "Anime", "Manga", "Profile", "Playground"]
+
   return (
     <>
       {/* Menu items */}
       <div className="flex space-x-7 bg-[oklch(.3_.02_274)]/90 backdrop-blur-xs backdrop:brightness-0 px-4 py-2 sticky top-0 z-10 bg-[oklcd()] justify-between w-full items-center ">
         <div className="flex gap-2">
-          <Link className="transition-all duration-250 hover:text-[oklch(1_.08_174)] 
+          {/* <Link className="transition-all duration-250 hover:text-[oklch(1_.08_174)] 
           border-b-2 border-transparent hover:border-[oklch(1_.08_174)]" to="/">Home</Link>
           <Link className="transition-all duration-250 hover:text-[oklch(1_.08_174)] 
           border-b-2 border-transparent hover:border-[oklch(1_.08_174)]" to="/Anime">Anime</Link>
           <Link className="transition-all duration-250 hover:text-[oklch(1_.08_174)] 
           border-b-2 border-transparent hover:border-[oklch(1_.08_174)]" to="/Manga">Manga</Link>
           <Link className="transition-all duration-250 hover:text-[oklch(1_.08_174)] 
-          border-b-2 border-transparent hover:border-[oklch(1_.08_174)]" to="/Profile">Profile</Link>
+          border-b-2 border-transparent hover:border-[oklch(1_.08_174)]" to="/Profile">Profile</Link> */}
+          {menuItems.map((item) => {
+            return (
+              <Link className="transition-all duration-250 hover:text-[oklch(1_.08_174)] 
+              border-b-2 border-transparent hover:border-[oklch(1_.08_174)]" to={item === "Home" ? "/" : "/" + item.toLowerCase()}>{item}</Link>
+            )
+          })}
         </div>
         {/* Search Form */}
         <div className="flex align-middle gap-1">

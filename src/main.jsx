@@ -10,6 +10,7 @@ import Home from './pages/HomePage.jsx';
 import Anime from './pages/AnimePage.jsx';
 import NotFound from './pages/NotFoundPage.jsx';
 import AnimeSearch from './pages/AnimeSearchPage.jsx';
+import Playground from './components/Playground.jsx'
 
 let router = createBrowserRouter([
   {
@@ -28,13 +29,16 @@ let router = createBrowserRouter([
         path: "animeSearch/",
         element: <AnimeSearch />,
       },
+      {
+        path: "playground/",
+        element: <Playground />,
+      },
     ]
   },
 ]);
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    {/* <App /> */}
     <RouterProvider router={router}/>
   </StrictMode>,
 )

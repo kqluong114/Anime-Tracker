@@ -14,6 +14,7 @@ function AnimeSearch() {
   let query = searchParams.get("q") ?? "";
   let filter = searchParams.get("filter") ?? "popularity";
   let url = `https://api.jikan.moe/v4/anime?q=${query}&order_by=${filter}&sort=asc&page=${page}`;
+  let pagination = {};
 
   let pageRef = useRef(page);
   useEffect(() => {
@@ -29,10 +30,12 @@ function AnimeSearch() {
   const fetchData = async (page) => {
     setLoading(true);
     try {
+      console.log(url);
       const res = await fetch(url);
       const data = await res.json();
       if (res.ok) {
         setShows((prev) => {
+          pagination = data.pagination;
           const extistingIds = new Set(prev.map(item => item.mal_id));
           const newItems = data.data.filter(item => !extistingIds.has(item.mal_id));
           return page === 1 ? data.data : [...prev, ...newItems];
@@ -42,16 +45,33 @@ function AnimeSearch() {
     catch (err) {
       console.error(err);
     }
+    setLoading(false);
+  }
+
+  const throttleFetch = (page, throttleRate) => {
+    let isFetching = false;
+    console.log("fetching");
+    () => {
+      if(!isFetching) {
+        isFetching = true;
+        fetchData(page)
+        setTimeout(() => {
+          isFetching = false;
+        }, throttleRate);
+      }
+    }
   }
 
   useEffect(() => {
-    let subscribed = true;
-    (async () => {
-      if (subscribed) {
-        await fetchData(1);
-      }
-    })();
-    return () => (subscribed = false);
+    fetchData(pagination ? pagination.current_page : 1);
+    console.log(pagination ? true : false);
+    // let subscribed = true;
+    // (async () => {
+    //   if (subscribed) {
+    //     await fetchData(1);
+    //   }
+    // })();
+    // return () => (subscribed = false);
   }, [url]);
 
   const genres = [
@@ -105,6 +125,19 @@ function AnimeSearch() {
     }
   }
 
+  const handleNextPage = () => {
+    if(loading){
+      return;
+    }
+    setPage((prev) => prev + 1);
+    throttleFetch(pageRef.current + 1);
+    return pageRef.current + 1;
+  }
+
+  const handleHasMore = () => {
+    return pagination.has_next_page;
+  }
+
   function GenreButton({ children }) {
     return <button
       className='border rounded-2x1 hover:bg-blue-200'
@@ -123,12 +156,8 @@ function AnimeSearch() {
       </div>
       <InfiniteScroll
         dataLength={() => shows.length} //This is important field to render the next data
-        next={() => {
-          setPage((prev) => prev + 1);
-          fetchData(pageRef.current + 1);
-          return pageRef.current + 1;
-        }}
-        hasMore={true}
+        next={handleNextPage}
+        hasMore={handleHasMore}
         loader={<h4>Loading...</h4>}
         endMessage={
           <p style={{ textAlign: 'center' }}>
