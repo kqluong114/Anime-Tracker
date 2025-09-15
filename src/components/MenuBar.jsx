@@ -36,11 +36,20 @@ function MenuBar() {
       setSearchResults([]);
       return;
     }
-    fetch(`https://api.jikan.moe/v4/anime?q=${debouncedSearch}&order_by=popularity&sort=asc&limit=4`)
-      .then((res) => res.json())
-      .then((data) => { setSearchResults(data.data); })
-      .then(() => { console.log(debouncedSearch); })
-      .catch((err) => { console.error(err); });
+
+    const fetchData = async () => {
+      try {
+        const res = await fetch(`https://api.jikan.moe/v4/anime?q=${debouncedSearch}&order_by=popularity&sort=asc&limit=4`);
+        const data = await res.json();
+        if(res.ok) {
+          setSearchResults(data.data);
+        }
+      }
+      catch(err) {
+        console.log(err);
+      }
+    }
+    fetchData();
   }, [debouncedSearch]);
 
   const menuItems = ["Home", "Anime", "Manga", "Profile", "Playground"]
