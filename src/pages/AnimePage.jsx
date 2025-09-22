@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react'
+import { use, useEffect, useState } from 'react'
+import AnimeOverviewCard from '../components/AnimeOverviewCard';
 
 function Anime() {
   const [data, setData] = useState({});
@@ -12,10 +13,14 @@ function Anime() {
     })
   }, [params]);
 
+  useEffect(() => {
+    console.log(data);
+  }, [data])
+
   return (
+    data.title ? (
       <>
-        <h1>{data.title}</h1>
-        {/* <img src="" alt="" /> */}
+        <AnimeOverviewCard content={data} />
         <p>Score</p>
         
         <button></button>
@@ -23,6 +28,8 @@ function Anime() {
         <p>Studio</p>
         <p>Episodes</p>
       </>
+      ) :
+      <span>loading...</span>
   );
 }
 

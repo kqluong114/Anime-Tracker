@@ -14,6 +14,28 @@
     background: oklch(.7 0 0 / .2);
 }
 
+@theme{
+    --color-shade-100:  oklch(0.1 0.02 274);
+    --color-shade-200:  oklch(0.2 0.02 274);
+    --color-shade-300:  oklch(0.3 0.02 274);
+    --color-shade-400:  oklch(0.4 0.02 274);
+    --color-shade-500:  oklch(0.5 0.02 274);
+    --color-shade-600:  oklch(0.6 0.02 274);
+    --color-shade-700:  oklch(0.7 0.02 274);
+    --color-shade-800:  oklch(0.8 0.02 274);
+    --color-shade-900:  oklch(0.9 0.02 274);
+
+    --color-mist-100:  oklch(.60 0.08 174);
+    --color-mist-200:  oklch(.65 0.08 174);
+    --color-mist-300:  oklch(.70 0.08 174);
+    --color-mist-400:  oklch(.75 0.08 174);
+    --color-mist-500:  oklch(.80 0.08 174);
+    --color-mist-600:  oklch(.85 0.08 174);
+    --color-mist-700:  oklch(.90 0.08 174);
+    --color-mist-800:  oklch(.95 0.08 174);
+    --color-mist-900:  oklch(1 0.08 174);
+}
+
 body {
     @apply bg-[oklch(0.3_0.02_274)];
 }
