@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { MagnifyingGlassIcon, StarIcon, FilmIcon } from "@heroicons/react/16/solid";
+// import useThrottleFetch from "../hooks/useThrottleFetch";
 
 import '../styles/App.css';
 // import SearchRecommend from "./SearchReccomend.jsx";
@@ -10,6 +11,8 @@ function MenuBar() {
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [searchFocused, setSearchFocused] = useState(false);
+  // const url = `https://api.jikan.moe/v4/anime?q=${debouncedSearch}&order_by=popularity&sort=asc&limit=4`;
+  // const {data, error} = useThrottleFetch({url, throttleRate: 0})
 
   const navigate = useNavigate();
 
@@ -23,13 +26,11 @@ function MenuBar() {
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedSearch(search);
-      console.log(search); // ff
-    }, 200);
+    }, 600);
     return () => {
       clearTimeout(handler);
     }
   }, [search]);
-
 
   useEffect(() => {
     if (!debouncedSearch) {
@@ -61,8 +62,7 @@ function MenuBar() {
         <div className="flex gap-2">
           {menuItems.map((item) => {
             return (
-              <Link className="transition-all duration-250 hover:text-[oklch(1_.08_174)] 
-              border-b-2 border-transparent hover:border-[oklch(1_.08_174)]" key={item} to={item === "Home" ? "/" : "/" + item.toLowerCase()}>{item}</Link>
+              <Link className="transition-all duration-250 hover:text-[oklch(1_.08_174)] border-b-2 border-transparent hover:border-[oklch(1_.08_174)]" key={item} to={item === "Home" ? "/" : "/" + item.toLowerCase()}>{item}</Link>
             )
           })}
         </div>
@@ -83,7 +83,7 @@ function MenuBar() {
             {/* Search Recommendations */}
             {searchFocused && searchResults.length > 0 ? (
               <div className="absolute shadow-2xs w-full top-8 border mt-1 rounded-b-md bg-[oklch(0.35_0.04_274)]">
-                {searchResults.map((show) => (
+                {searchResults?.map((show) => (
                       <Link
                         to={`/Anime/${show.mal_id}`}
                         onMouseDown={(e) => e.preventDefault()}>
