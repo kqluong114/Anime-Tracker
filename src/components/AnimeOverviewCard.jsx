@@ -8,8 +8,8 @@ function AnimeOverviewCard({ content }) {
   useEffect(() => {
     window.scrollTo({
       top: scrollPos,
-      behavior: "auto"
-    })
+      behavior: "auto",
+    });
     console.log(scrollPos);
   }, [scrollPos]);
   // use id to display information about the anime
@@ -40,13 +40,25 @@ function AnimeOverviewCard({ content }) {
         <span>Difficulty: Not added yet</span>
         <span>My Difficulty: Not added yet</span>
       </div>
-      <div
-        id="description"
-        className="flex flex-col gap-4 text-sm"
-      >
-        <p>Genres: {[content.genres.map((genre) => genre.name)]}</p>
+      <div id="description" className="flex flex-col gap-4 text-sm">
+        <div className="flex gap-1">
+          {[
+            content.genres.map((genre) => (
+              <button
+                key={genre.name}
+                className="p-1 rounded-2xl bg-mist-500 text-sm"
+              >
+                {genre.name}
+              </button>
+            )),
+          ]}
+        </div>
         <h2 className="text-lg">Synopsis</h2>
-        <p className={`${showFullSynopsis ? "" : "line-clamp-10"} transition-all duration-500 ease-in-out`}>
+        <p
+          className={`${
+            showFullSynopsis ? "" : "line-clamp-10"
+          } transition-all duration-500 ease-in-out`}
+        >
           {content.synopsis}
         </p>
         <button
