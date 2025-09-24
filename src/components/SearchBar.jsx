@@ -51,15 +51,15 @@ const SearchBar = ({ searchIsOpen, setSearchIsOpen }) => {
   }, [debouncedSearch]);
 
   return (
-    <div className="flex align-middle gap-1 bg-amber-50">
+    <div className="flex align-middle gap-1">
       <form
         className={`relative text-black ${
-          searchIsOpen ? "max-w-[400px]" : "max-w-0"
+          searchIsOpen ? "max-w-[400px] min-w-[50px]" : "max-w-0"
         } overflow-hidden transition-all duration-150`}
         onSubmit={handleSearch}
       >
         <input
-          className="transition-color duration-250 border-2 border-transparent focus:rounded-b-none focus:border-[oklch(.8_.08_174)] pl-2 py-1 pr-6 rounded text-black bg-white outline-0"
+          className="transition-color w-full duration-250 border-2 border-transparent focus:rounded-b-none focus:border-[oklch(.8_.08_174)] pl-2 py-1 pr-6 rounded text-black bg-white outline-0"
           type="text"
           value={search}
           placeholder="Search"
@@ -113,7 +113,7 @@ const SearchBar = ({ searchIsOpen, setSearchIsOpen }) => {
           </div>
         ) : null}
       </form>
-      <MagnifyingGlassIcon className="inline-block w-6 right-0 text-[oklch(1_.08_174)]" />
+      <MagnifyingGlassIcon className="inline-block flex-shrink-0 w-6 right-0 text-[oklch(1_.08_174)]" />
     </div>
   );
 };
