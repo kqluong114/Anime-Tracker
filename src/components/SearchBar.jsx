@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { StarIcon, FilmIcon } from "@heroicons/react/16/solid";
 
-const SearchBar = () => {
+const SearchBar = ({ searchIsOpen, setSearchIsOpen }) => {
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -52,7 +52,12 @@ const SearchBar = () => {
 
   return (
     <div className="flex align-middle gap-1 bg-amber-50">
-      <form className="relative text-black" onSubmit={handleSearch}>
+      <form
+        className={`relative text-black ${
+          searchIsOpen ? "max-w-[400px]" : "max-w-0"
+        } overflow-hidden transition-all duration-150`}
+        onSubmit={handleSearch}
+      >
         <input
           className="transition-color duration-250 border-2 border-transparent focus:rounded-b-none focus:border-[oklch(.8_.08_174)] pl-2 py-1 pr-6 rounded text-black bg-white outline-0"
           type="text"

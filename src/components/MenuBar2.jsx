@@ -21,7 +21,7 @@ const MenuBar2 = () => {
   return (
     <>
       {/* Menu items */}
-      <div className="flex h-12 space-x-7 bg-[oklch(.3_.02_274)]/90 backdrop-blur-xs backdrop:brightness-0 px-4 py-2 fixed top-0 z-10 justify-between w-full items-center ">
+      <div className="flex h-12 bg-[oklch(.3_.02_274)]/90 backdrop-blur-xs backdrop:brightness-0 px-4 py-2 fixed top-0 z-10 justify-between w-full items-center ">
         <button
           onClick={() => {
             setSearchIsOpen((prev) => !prev);
