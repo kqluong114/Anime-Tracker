@@ -2,6 +2,7 @@ import { MagnifyingGlassIcon } from "@heroicons/react/16/solid";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { StarIcon, FilmIcon } from "@heroicons/react/16/solid";
+import { FaArrowLeft } from "react-icons/fa";
 
 const SearchBar = ({ searchIsOpen, setSearchIsOpen }) => {
   const [search, setSearch] = useState("");
@@ -51,9 +52,20 @@ const SearchBar = ({ searchIsOpen, setSearchIsOpen }) => {
   }, [debouncedSearch]);
 
   return (
-    <div className="flex align-middle gap-1">
+    <div className="flex align-middle justify-center gap-1">
+      <button
+        onClick={() => {
+          setSearchIsOpen(false);
+        }}
+      >
+        <FaArrowLeft
+          className={`${
+            searchIsOpen ? "visible" : "invisible"
+          } transition-all duration-150`}
+        />
+      </button>
       <form
-        className={`relative text-black ${
+        className={`text-black ${
           searchIsOpen ? "max-w-[400px] min-w-[50px]" : "max-w-0"
         } overflow-hidden transition-all duration-150`}
         onSubmit={handleSearch}
@@ -113,7 +125,9 @@ const SearchBar = ({ searchIsOpen, setSearchIsOpen }) => {
           </div>
         ) : null}
       </form>
-      <MagnifyingGlassIcon className="inline-block flex-shrink-0 w-6 right-0 text-[oklch(1_.08_174)]" />
+      <button onClick={() => setSearchIsOpen((prev) => !prev)}>
+        <MagnifyingGlassIcon className="inline-block flex-shrink-0 w-6 right-0 text-[oklch(1_.08_174)]" />
+      </button>
     </div>
   );
 };
