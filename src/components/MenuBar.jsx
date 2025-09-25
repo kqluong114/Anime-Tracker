@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import SideMenu from "./SideMenu";
 
@@ -11,31 +11,23 @@ import {
 
 const MenuBar = () => {
   const [searchIsOpen, setSearchIsOpen] = useState(false);
-  const [hamburgerIsOpen, setHamburgerIsOpen] = useState(false);
-
-  const navigate = useNavigate();
+  const [sideMenuIsOpen, setSideMenuIsOpen] = useState(false);
 
   return (
     <>
       {/* Menu items */}
       <div className="fixed top-0 z-10 flex h-12 w-full items-center justify-between bg-[oklch(.3_.02_274)]/90 px-4 py-2 backdrop-blur-xs backdrop:brightness-0">
         <button
-          onClick={() => {
-            setSearchIsOpen((prev) => !prev);
-          }}
+          className={`group top-2 left-[310px] flex h-10 w-10 cursor-pointer flex-col items-center justify-between p-2`}
+          onClick={() => setSideMenuIsOpen(true)}
         >
-          click me
-        </button>
-        <button
-          onClick={() => {
-            setHamburgerIsOpen((prev) => !prev);
-          }}
-        >
-          side menu
+          <div className="bg-mist-600 group-hover:bg-mist-400 h-1 w-8 rounded-2xl transition-colors duration-150"></div>
+          <div className="bg-mist-600 group-hover:bg-mist-400 h-1 w-8 rounded-2xl transition-colors duration-150"></div>
+          <div className="bg-mist-600 group-hover:bg-mist-400 h-1 w-8 rounded-2xl transition-colors duration-150"></div>
         </button>
         <SideMenu
-          hamburgerIsOpen={hamburgerIsOpen}
-          setHamburgerIsOpen={setHamburgerIsOpen}
+          sideMenuIsOpen={sideMenuIsOpen}
+          setSideMenuIsOpen={setSideMenuIsOpen}
         />
         <SearchBar
           className={`${
