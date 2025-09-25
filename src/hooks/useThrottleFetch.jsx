@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import _ from "lodash";
 
-const useThrottleFetch = ({url, throttleRate}) => {
+const useThrottleFetch = ({ url, throttleRate }) => {
   const [data, setData] = useState({});
   const [error, setError] = useState(null);
   const throttledFetchRef = useRef(null);
@@ -33,7 +33,7 @@ const useThrottleFetch = ({url, throttleRate}) => {
     };
   }, [url, throttleRate]);
 
-  return {data, error};
-}
+  return { data, error };
+};
 
 export default useThrottleFetch;

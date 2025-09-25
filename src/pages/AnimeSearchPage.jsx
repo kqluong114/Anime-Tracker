@@ -1,10 +1,10 @@
-import { useSearchParams, Link } from 'react-router-dom';
-import { useEffect, useRef, useState } from 'react'
-import InfiniteScroll from 'react-infinite-scroll-component';
-import { StarIcon, FilmIcon } from '@heroicons/react/16/solid';
-import _ from "lodash"
-import AnimeCard from '../components/AnimeCard';
-import FilterSelectionCard from '../components/FilterSelectionCard';
+import { useSearchParams, Link } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { StarIcon, FilmIcon } from "@heroicons/react/16/solid";
+import _ from "lodash";
+import AnimeCard from "../components/AnimeCard";
+import FilterSelectionCard from "../components/FilterSelectionCard";
 
 function AnimeSearch() {
   const [shows, setShows] = useState([]);
@@ -32,24 +32,24 @@ function AnimeSearch() {
       if (res.ok) {
         setPagination(data.pagination);
         setShows((prev) => {
-          const extistingIds = new Set(prev.map(item => item.mal_id));
-          const newItems = data.data.filter(item => !extistingIds.has(item.mal_id));
+          const extistingIds = new Set(prev.map((item) => item.mal_id));
+          const newItems = data.data.filter(
+            (item) => !extistingIds.has(item.mal_id),
+          );
           return page === 1 ? data.data : [...prev, ...newItems];
         });
       }
-    }
-    catch (err) {
+    } catch (err) {
       console.error(err);
-    }
-    finally {
+    } finally {
       setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
-    if(!throttledFetchRef.current) {
+    if (!throttledFetchRef.current) {
       throttledFetchRef.current = _.throttle((page) => {
-        fetchData(page)
+        fetchData(page);
       }, 2000);
     }
     throttledFetchRef.current(pagination?.current_page ?? 1);
@@ -58,11 +58,11 @@ function AnimeSearch() {
   const handleNextPage = () => {
     let currentPage = pagination?.current_page ?? 1;
     return throttledFetchRef.current(currentPage + 1);
-  }
+  };
 
   const handleHasMore = () => {
     return pagination.has_next_page;
-  }
+  };
 
   return (
     <>
@@ -73,14 +73,16 @@ function AnimeSearch() {
         hasMore={handleHasMore}
         loader={<h4>Loading...</h4>}
       >
-        <div className="mx-auto p-4 max-w-[1000px] flex flex-wrap gap-4 justify-center overflow-hidden">
-          {shows ? shows.map((item) => (
-            <AnimeCard content={item} />
-          )) : <div>loading...</div>}
+        <div className="mx-auto flex max-w-[1000px] flex-wrap justify-center gap-4 overflow-hidden p-4">
+          {shows ? (
+            shows.map((item) => <AnimeCard content={item} />)
+          ) : (
+            <div>loading...</div>
+          )}
         </div>
       </InfiniteScroll>
     </>
   );
 }
 
-export default AnimeSearch
+export default AnimeSearch;

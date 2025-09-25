@@ -1,4 +1,4 @@
-function LoadingText({size}) {
+function LoadingText({ size }) {
   const sizes = {
     small: "h-2",
     medium: "h-4",
@@ -7,7 +7,7 @@ function LoadingText({size}) {
 
   return (
     <div className={`w-full rounded-2xl bg-gray-600 ${sizes[size]}`}></div>
-  )
-} 
+  );
+}
 
 export default LoadingText;

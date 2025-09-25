@@ -9,7 +9,7 @@ function Home() {
   useEffect(() => {
     setLoading(true);
     fetch(
-      `https://api.jikan.moe/v4/anime?q=&status=airing&type=tv&order_by=popularity&sort=asc`
+      `https://api.jikan.moe/v4/anime?q=&status=airing&type=tv&order_by=popularity&sort=asc`,
     )
       .then((res) => res.json())
       .then((data) => {
@@ -28,7 +28,7 @@ function Home() {
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <div className="mx-auto p-4 max-w-[1000px] flex flex-wrap gap-4 justify-center overflow-hidden">
+        <div className="mx-auto flex max-w-[1000px] flex-wrap justify-center gap-4 overflow-hidden p-4">
           {anime.map((item) => (
             <AnimeCard content={item} />
           ))}

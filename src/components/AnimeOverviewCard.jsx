@@ -24,7 +24,7 @@ function AnimeOverviewCard({ content }) {
   return (
     <section
       id="overview-card"
-      className="flex flex-col items-center p-4 gap-4 m-auto bg-shade-400"
+      className="bg-shade-400 m-auto flex flex-col items-center gap-4 p-4"
     >
       <h1 className="text-2xl">{content.title}</h1>
       <div>
@@ -46,7 +46,7 @@ function AnimeOverviewCard({ content }) {
             content.genres.map((genre) => (
               <button
                 key={genre.name}
-                className="p-1 rounded-2xl bg-mist-500 text-sm"
+                className="bg-mist-500 rounded-2xl p-1 text-sm"
               >
                 {genre.name}
               </button>
@@ -62,7 +62,7 @@ function AnimeOverviewCard({ content }) {
           {content.synopsis}
         </p>
         <button
-          className="p-1 bg-mist-400 rounded-2xl w-full max-w-md m-auto"
+          className="bg-mist-400 m-auto w-full max-w-md rounded-2xl p-1"
           onClick={handleShowMore}
         >
           {showFullSynopsis ? "Show Less" : "Show More"}

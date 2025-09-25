@@ -1,16 +1,15 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
 // import './index.css'
-import "./styles/App.css"
+import "./styles/App.css";
 // import App from './App.jsx'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import App from './App.jsx'
-import MenuBar from './components/MenuBar.jsx';
-import Home from './pages/HomePage.jsx';
-import Anime from './pages/AnimePage.jsx';
-import NotFound from './pages/NotFoundPage.jsx';
-import AnimeSearch from './pages/AnimeSearchPage.jsx';
-import Playground from './components/Playground.jsx'
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import App from "./App.jsx";
+import Home from "./pages/HomePage.jsx";
+import Anime from "./pages/AnimePage.jsx";
+import NotFound from "./pages/NotFoundPage.jsx";
+import AnimeSearch from "./pages/AnimeSearchPage.jsx";
+import Playground from "./components/Playground.jsx";
 
 let router = createBrowserRouter([
   {
@@ -18,9 +17,7 @@ let router = createBrowserRouter([
     element: <App />,
     errorElement: <NotFound />,
     children: [
-      { index: true, 
-        element: <Home /> 
-      },
+      { index: true, element: <Home /> },
       {
         path: "anime/:animeId",
         element: <Anime />,
@@ -33,12 +30,12 @@ let router = createBrowserRouter([
         path: "playground/",
         element: <Playground />,
       },
-    ]
+    ],
   },
 ]);
 
-createRoot(document.getElementById('root')).render(
+createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router}/>
+    <RouterProvider router={router} />
   </StrictMode>,
-)
+);

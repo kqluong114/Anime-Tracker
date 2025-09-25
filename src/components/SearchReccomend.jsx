@@ -3,7 +3,7 @@
 // function SearchRecommend({search}) {
 //   const [recommendedSearch, setRecommendedSearch] = useState([]);
 //   const [debouncedSearch, setDebouncedSearch] = useState("");
-  
+
 //   useEffect(() => {
 //     const handler = setTimeout(() => {
 //       setDebouncedSearch(search);
@@ -33,7 +33,7 @@
 //       }
 //       return res.json();
 //     })
-//     .then((data) => { setRecommendedSearch(data.data); }) 
+//     .then((data) => { setRecommendedSearch(data.data); })
 //     .catch((err) => { console.error(err); });
 //   }, [debouncedSearch]);
 
