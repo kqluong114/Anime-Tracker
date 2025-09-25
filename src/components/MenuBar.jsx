@@ -45,7 +45,7 @@ function MenuBar() {
     const fetchData = async () => {
       try {
         const res = await fetch(
-          `https://api.jikan.moe/v4/anime?q=${debouncedSearch}&order_by=popularity&sort=asc&limit=4`
+          `https://api.jikan.moe/v4/anime?q=${debouncedSearch}&order_by=popularity&sort=asc&limit=4`,
         );
         const data = await res.json();
         if (res.ok) {
@@ -63,12 +63,12 @@ function MenuBar() {
   return (
     <>
       {/* Menu items */}
-      <div className="flex h-12 space-x-7 bg-[oklch(.3_.02_274)]/90 backdrop-blur-xs backdrop:brightness-0 px-4 py-2 fixed top-0 z-10 justify-between w-full items-center ">
+      <div className="fixed top-0 z-10 flex h-12 w-full items-center justify-between space-x-7 bg-[oklch(.3_.02_274)]/90 px-4 py-2 backdrop-blur-xs backdrop:brightness-0">
         <div className="flex gap-2">
           {menuItems.map((item) => {
             return (
               <Link
-                className="transition-all duration-250 hover:text-[oklch(1_.08_174)] border-b-2 border-transparent hover:border-[oklch(1_.08_174)]"
+                className="border-b-2 border-transparent transition-all duration-250 hover:border-[oklch(1_.08_174)] hover:text-[oklch(1_.08_174)]"
                 key={item}
                 to={item === "Home" ? "/" : "/" + item.toLowerCase()}
               >
@@ -78,10 +78,10 @@ function MenuBar() {
           })}
         </div>
         {/* Search Form */}
-        <div className="flex align-middle gap-1">
+        <div className="flex gap-1 align-middle">
           <form className="relative text-black" onSubmit={handleSearch}>
             <input
-              className="transition-color duration-250 border-2 border-transparent focus:rounded-b-none focus:border-[oklch(.8_.08_174)] pl-2 py-1 pr-6 rounded text-black bg-white outline-0"
+              className="transition-color rounded border-2 border-transparent bg-white py-1 pr-6 pl-2 text-black outline-0 duration-250 focus:rounded-b-none focus:border-[oklch(.8_.08_174)]"
               type="text"
               value={search}
               placeholder="Search"
@@ -93,7 +93,7 @@ function MenuBar() {
             />
             {/* Search Recommendations */}
             {searchFocused && searchResults.length > 0 ? (
-              <div className="absolute shadow-2xs w-full top-8 border mt-1 rounded-b-md bg-[oklch(0.35_0.04_274)]">
+              <div className="absolute top-8 mt-1 w-full rounded-b-md border bg-[oklch(0.35_0.04_274)] shadow-2xs">
                 {searchResults?.map((show) => (
                   <Link
                     to={`/Anime/${show.mal_id}`}
@@ -101,7 +101,7 @@ function MenuBar() {
                   >
                     <div
                       key={show.mal_id}
-                      className="flex justify-items-start duration-250 rounded text-xs text-bold text-white p-1 pb-2 hover:bg-[oklch(0.4_0.02_274)] hover:text-[oklch(.9_.08_174)] w-full"
+                      className="text-bold flex w-full justify-items-start rounded p-1 pb-2 text-xs text-white duration-250 hover:bg-[oklch(0.4_0.02_274)] hover:text-[oklch(.9_.08_174)]"
                     >
                       <img
                         className="inline-block w-10 pr-1"
@@ -109,9 +109,9 @@ function MenuBar() {
                         alt={show.title}
                       />
                       <div className="inline-flex min-w-0 flex-col justify-between justify-items-start">
-                        <span className="truncate block">{show.title}</span>
-                        <div className="flex p-0 gap-0.5 w-auto text-4xs">
-                          <div className="bg-[oklch(.9_.08_174)] flex gap-1 justify-center align-middle text-black text-bold rounded-l-sm px-1 py-.5">
+                        <span className="block truncate">{show.title}</span>
+                        <div className="text-4xs flex w-auto gap-0.5 p-0">
+                          <div className="text-bold py-.5 flex justify-center gap-1 rounded-l-sm bg-[oklch(.9_.08_174)] px-1 align-middle text-black">
                             <StarIcon className="w-2" />{" "}
                             <div>
                               <span className="text-[10px]">
@@ -119,7 +119,7 @@ function MenuBar() {
                               </span>
                             </div>
                           </div>
-                          <div className="bg-[oklch(.9_.2_1)] flex gap-1 justify-center text-black text-bold rounded-r-sm px-1 py-.5">
+                          <div className="text-bold py-.5 flex justify-center gap-1 rounded-r-sm bg-[oklch(.9_.2_1)] px-1 text-black">
                             <FilmIcon className="w-2" />{" "}
                             <div>
                               <span className="text-[10px]">
@@ -135,11 +135,11 @@ function MenuBar() {
               </div>
             ) : null}
           </form>
-          <MagnifyingGlassIcon className="inline-block w-6 right-0 text-[oklch(1_.08_174)]" />
+          <MagnifyingGlassIcon className="right-0 inline-block w-6 text-[oklch(1_.08_174)]" />
         </div>
         <div>
           <a
-            className="transition-colors duration-250 p-2 rounded-md text-black font-bold bg-[oklch(.90_.08_174)] hover:bg-[oklch(.85_.08_174)]"
+            className="rounded-md bg-[oklch(.90_.08_174)] p-2 font-bold text-black transition-colors duration-250 hover:bg-[oklch(.85_.08_174)]"
             href="/Login"
           >
             Login
