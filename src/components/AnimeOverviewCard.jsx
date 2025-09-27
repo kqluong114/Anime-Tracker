@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useLayoutEffect } from "react";
 import { MdHeight } from "react-icons/md";
 
 const useTruncateElement = ({ ref }) => {
@@ -8,8 +8,9 @@ const useTruncateElement = ({ ref }) => {
   // const [scrollHeight, setScrollHeight] = useState(0);
   // const wait = useRef(false);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const updateHeights = () => {
+      if (isReadMore) return;
       let offsetHeight = ref.current.offsetHeight;
       let scrollHeight = ref.current.scrollHeight;
       setIsTruncated(offsetHeight < scrollHeight);
@@ -95,12 +96,12 @@ const AnimeOverviewCard = ({ content }) => {
         <h2 className="text-lg">Synopsis</h2>
         <p
           ref={ref}
-          className={`line-clamp-10 overflow-hidden transition-all duration-150 ease-in-out`}
+          className={`${isReadMore ? "" : "line-clamp-10"} overflow-hidden transition-all duration-150 ease-in-out`}
         >
           {content.synopsis}
         </p>
         <button
-          className={`bg-mist-400 m-auto w-full max-w-md rounded-2xl p-1 ${isTruncated ? "visible" : "invisible"}`}
+          className={`bg-mist-400 m-auto w-full max-w-md rounded-2xl p-1 ${isTruncated || isReadMore ? "visible" : "invisible"}`}
           onClick={handleShowMore}
         >
           {isReadMore ? "Show Less" : "Show More"}
