@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import AnimeOverviewCard from "../components/AnimeOverviewCard";
+import StaffSection from "../components/StaffSection";
 
 function Anime() {
   const [data, setData] = useState({});
@@ -29,12 +30,7 @@ function Anime() {
   return data.title ? (
     <>
       <AnimeOverviewCard content={data} />
-      <p>Score</p>
-
-      <button></button>
-      <p>Anime Description</p>
-      <p>Studio</p>
-      <p>Episodes</p>
+      <StaffSection />
     </>
   ) : (
     <span>loading...</span>
