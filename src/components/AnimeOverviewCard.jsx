@@ -11,10 +11,10 @@ const useTruncateElement = ({ ref }) => {
   useLayoutEffect(() => {
     const updateHeights = () => {
       if (isReadMore) return;
-      let offsetHeight = ref.current.offsetHeight;
-      let scrollHeight = ref.current.scrollHeight;
-      setIsTruncated(offsetHeight < scrollHeight);
-      console.log(isTruncated);
+      // let offsetHeight = ref.current.offsetHeight;
+      // let scrollHeight = ref.current.scrollHeight;
+      // setIsTruncated(offsetHeight < scrollHeight);
+      setIsTruncated(ref.current.offsetHeight < ref.current.scrollHeight);
     };
 
     // const throttleHeightUpdate = () => {

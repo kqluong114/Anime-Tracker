@@ -27,7 +27,7 @@ const SideMenu = ({ sideMenuIsOpen, setSideMenuIsOpen }) => {
               <li className="w-full" key={item.toLowerCase()}>
                 <Link
                   className="block w-full border-b-2 border-transparent transition-all duration-250 hover:border-[oklch(1_.08_174)] hover:text-[oklch(1_.08_174)]"
-                  to={`/${item.toLowerCase()}`}
+                  to={`/${item.toLowerCase() === "home" ? "" : item.toLowerCase()}`}
                 >
                   {item}
                 </Link>

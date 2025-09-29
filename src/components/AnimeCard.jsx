@@ -46,7 +46,7 @@ const AnimeCard = ({ content }) => {
       <div className="py-4">
         <Link
           to={`/anime/${content.mal_id}`}
-          className="mb-2 line-clamp-1 text-base font-bold transition-all duration-200 hover:text-[oklch(.9_.08_174)]"
+          className="mb-2 line-clamp-1 truncate text-base font-bold transition-all duration-200 hover:text-[oklch(.9_.08_174)]"
         >
           {content.title}
         </Link>

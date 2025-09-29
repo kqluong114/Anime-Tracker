@@ -11,7 +11,7 @@ import NotFound from "./pages/NotFoundPage.jsx";
 import AnimeSearch from "./pages/AnimeSearchPage.jsx";
 import Playground from "./components/Playground.jsx";
 
-let router = createBrowserRouter([
+const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
