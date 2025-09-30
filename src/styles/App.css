@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @plugin "tailwind-scrollbar";
+@import 'tailwind-scrollbar-hide/v4';
 
 * {
   @apply scrollbar scrollbar-thumb-[oklch(1_.08_174/.8)];
@@ -12,6 +13,10 @@
 ::-webkit-scrollbar-track {
   radius: 0;
   background: oklch(0.7 0 0 / 0.2);
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
 }
 
 @theme {

@@ -1,9 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { getAnimeSearch } from "../../api/animeAPI";
 import AnimeCard from "../AnimeCard";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getBannerById, getPopularBanners } from "../../api/animeAPI";
 import { IoIosArrowForward } from "react-icons/io";
+import { GoDotFill, GoDot } from "react-icons/go";
 
 const getCurrentSeason = () => {
   const month = new Date().getMonth() + 1; // JS months: 0-11, so +1
@@ -29,8 +30,31 @@ const getSeasonDataRange = (season, year) => {
 };
 
 export const BannerSection = () => {
-  const [popularAnime, setPopularAnime] = useState([]);
-  const [popularBanners, setPopularBanners] = useState([]);
+  const scrollContainerRef = useRef(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const scrollToIndex = (index) => {
+    const container = scrollContainerRef.current;
+    const child = container.children[index];
+    if (child) {
+      child.scrollIntoView({ behavior: "smooth", inline: "center" });
+      setActiveIndex(index);
+    }
+  };
+
+  // useEffect(() => {
+  //   const container = scrollContainerRef.current;
+  //   container.addEventListener("scroll", handleNext);
+  //   return () => {
+  //     container.
+  //   }
+  // }, [])
+
+  const handleNext = () => {
+    scrollToIndex((activeIndex + 1) % 5);
+    console.log(activeIndex);
+  };
+
   const popularQuery = useQuery({
     queryKey: ["home", "popular"],
     queryFn: () =>
@@ -60,33 +84,59 @@ export const BannerSection = () => {
   console.log(bannerQuery ? bannerQuery?.data?.Page.media : "");
   console.log(popularQuery ? popularQuery?.data?.data : "");
 
+  const BannerScrollButton = ({ index }) => {
+    return (
+      <button
+        className="text-mist-400 w-fit text-2xl hover:text-white"
+        onClick={() => scrollToIndex(index)}
+      >
+        {index === activeIndex ? <GoDotFill /> : <GoDot />}
+      </button>
+    );
+  };
+
   return (
     <>
       {popularQuery.isLoading ? (
         <p>Loading...</p>
       ) : (
-        <div className="m-auto flex h-[500px] w-full max-w-[1200px] snap-x snap-mandatory gap-0 overflow-x-scroll overflow-y-hidden scroll-smooth whitespace-nowrap">
-          {popularQuery?.data?.data.map((item) => (
-            // <AnimeCard content={item} />
-            <div className="flex w-full flex-shrink-0">
-              <div className="z-1 -mr-44 flex flex-col justify-end gap-4 p-4">
-                <h2 className="line-clamp-2 truncate text-4xl text-wrap">
-                  {item.title}
-                </h2>
-                <p className="line-clamp-3 truncate text-wrap">
-                  {item.synopsis}
-                </p>
-                <button className="bg-mist-500 hover:bg-mist-200 w-fit cursor-pointer rounded-2xl px-4 py-2 text-2xl">
-                  Details <IoIosArrowForward className="inline" />
-                </button>
+        <div className="relative pb-4">
+          <div
+            id="hideScroll"
+            ref={scrollContainerRef}
+            className="scrollbar-hidden scrollbar m-auto flex h-[500px] w-full snap-x snap-mandatory gap-4 overflow-x-scroll overflow-y-hidden scroll-smooth p-4 whitespace-nowrap"
+          >
+            {popularQuery?.data?.data.map((item) => (
+              // <AnimeCard content={item} />
+              <div className="flex w-full flex-shrink-0 snap-center">
+                <div className="z-1 -mr-44 flex flex-col justify-end gap-4 p-4">
+                  <h2 className="line-clamp-2 truncate text-4xl text-wrap">
+                    {item.title}
+                  </h2>
+                  <p className="line-clamp-3 truncate text-wrap">
+                    {item.synopsis}
+                  </p>
+                  <button className="bg-mist-500 hover:bg-mist-200 w-fit cursor-pointer rounded-2xl px-4 py-2 text-2xl">
+                    Details <IoIosArrowForward className="inline" />
+                  </button>
+                </div>
+                <div className="h-full flex-shrink-0 overflow-y-hidden mask-y-from-50% mask-x-from-90%">
+                  <img
+                    className="h-full md:h-[130%] md:-translate-y-1/6 lg:h-[150%]"
+                    src={item.images.webp.large_image_url}
+                    alt=""
+                  />
+                </div>
               </div>
-              <img
-                className="h-full flex-shrink-0 overflow-y-hidden mask-y-from-50% mask-x-from-90% md:h-[130%] md:-translate-y-1/6"
-                src={item.images.webp.large_image_url}
-                alt=""
-              />
-            </div>
-          ))}
+            ))}
+          </div>
+          <div className="absolute top-5 left-1/2 z-1 flex -translate-x-1/2 gap-1">
+            <BannerScrollButton key={0} index={0} />
+            <BannerScrollButton key={1} index={1} />
+            <BannerScrollButton key={2} index={2} />
+            <BannerScrollButton key={3} index={3} />
+            <BannerScrollButton key={4} index={4} />
+          </div>
         </div>
         //// {/* {bannerQuery?.data?.Page?.media.map((item) => ( */}
         ////   <AnimeCard content={item} />
