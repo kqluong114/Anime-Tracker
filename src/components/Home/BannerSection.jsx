@@ -104,23 +104,23 @@ export const BannerSection = () => {
           <div
             id="hideScroll"
             ref={scrollContainerRef}
-            className="scrollbar-hidden scrollbar m-auto flex h-[500px] w-full snap-x snap-mandatory gap-4 overflow-x-scroll overflow-y-hidden scroll-smooth p-4 whitespace-nowrap"
+            className="scrollbar-hidden scrollbar m-auto flex h-[500px] w-full snap-x snap-mandatory gap-20 overflow-x-scroll overflow-y-hidden scroll-smooth p-4 whitespace-nowrap"
           >
             {popularQuery?.data?.data.map((item) => (
               // <AnimeCard content={item} />
               <div className="flex w-full flex-shrink-0 snap-center">
                 <div className="z-1 -mr-44 flex flex-col justify-end gap-4 p-4">
-                  <h2 className="line-clamp-2 truncate text-4xl text-wrap">
+                  <h2 className="line-clamp-2 truncate text-2xl text-wrap md:text-4xl">
                     {item.title}
                   </h2>
-                  <p className="line-clamp-3 truncate text-wrap">
+                  <p className="md: line-clamp-3 truncate text-sm text-wrap md:text-[16px]">
                     {item.synopsis}
                   </p>
-                  <button className="bg-mist-500 hover:bg-mist-200 w-fit cursor-pointer rounded-2xl px-4 py-2 text-2xl">
+                  <button className="bg-mist-500 hover:bg-mist-200 w-fit cursor-pointer rounded-2xl px-4 py-2 text-sm md:text-2xl">
                     Details <IoIosArrowForward className="inline" />
                   </button>
                 </div>
-                <div className="h-full flex-shrink-0 overflow-y-hidden mask-y-from-50% mask-x-from-90%">
+                <div className="h-full flex-shrink-0 overflow-hidden mask-y-from-50% mask-x-from-90%">
                   <img
                     className="h-full md:h-[130%] md:-translate-y-1/6 lg:h-[150%]"
                     src={item.images.webp.large_image_url}
