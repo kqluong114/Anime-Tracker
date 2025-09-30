@@ -55,6 +55,16 @@ export const BannerSection = () => {
     console.log(activeIndex);
   };
 
+  // const useEffect (() => {
+  //   const scrollContainerChildren = Array.from(scrollContainerRef.current.children);
+  //   const scrollObserver = new IntersectionObserver(entries => {
+  //     entries
+  //     setActiveIndex(entry.index);
+  //   })
+  //   scrollContainerChildren.forEach((child) => scrollObserver.observe(child));
+  //   return () => scrollObserver.disconnect();
+  // }, [])
+
   const popularQuery = useQuery({
     queryKey: ["home", "popular"],
     queryFn: () =>
