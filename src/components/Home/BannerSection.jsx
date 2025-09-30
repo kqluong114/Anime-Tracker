@@ -2,7 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import { getAnimeSearch } from "../../api/animeAPI";
 import AnimeCard from "../AnimeCard";
 import { useEffect, useState } from "react";
-import { getBannerById } from "../../api/animeAPI";
+import { getBannerById, getPopularBanners } from "../../api/animeAPI";
+import { IoIosArrowForward } from "react-icons/io";
 
 const getCurrentSeason = () => {
   const month = new Date().getMonth() + 1; // JS months: 0-11, so +1
@@ -44,34 +45,62 @@ export const BannerSection = () => {
 
   const malIds = popularQuery?.data?.data.map((anime) => anime.mal_id);
 
+  // const bannerQuery = useQuery({
+  //   queryKey: ["anilist", "banners", malIds],
+  //   queryFn: () => getBannerById(malIds),
+  //   enabled: !!malIds?.length,
+  // });
+
   const bannerQuery = useQuery({
-    queryKey: ["anilist", "banners", malIds],
-    queryFn: () => getBannerById(malIds),
+    queryKey: ["anilist", "banners"],
+    queryFn: getPopularBanners,
     enabled: !!malIds?.length,
   });
 
-  console.log(bannerQuery ? bannerQuery.data : "");
+  console.log(bannerQuery ? bannerQuery?.data?.Page.media : "");
+  console.log(popularQuery ? popularQuery?.data?.data : "");
 
   return (
     <>
       {popularQuery.isLoading ? (
         <p>Loading...</p>
       ) : (
-        <div className="flex h-[300px] w-full snap-x snap-mandatory gap-4 overflow-x-scroll scroll-smooth whitespace-nowrap">
-          {popularQuery?.data?.data.map((item, index) => (
+        <div className="m-auto flex h-[500px] w-full max-w-[1200px] snap-x snap-mandatory gap-0 overflow-x-scroll overflow-y-hidden scroll-smooth whitespace-nowrap">
+          {popularQuery?.data?.data.map((item) => (
             // <AnimeCard content={item} />
-            <div className="flex w-screen flex-shrink-0">
-              <div className="">
-                <p>title</p>
+            <div className="flex w-full flex-shrink-0">
+              <div className="z-1 -mr-44 flex flex-col justify-end gap-4 p-4">
+                <h2 className="line-clamp-2 truncate text-4xl text-wrap">
+                  {item.title}
+                </h2>
+                <p className="line-clamp-3 truncate text-wrap">
+                  {item.synopsis}
+                </p>
+                <button className="bg-mist-500 hover:bg-mist-200 w-fit cursor-pointer rounded-2xl px-4 py-2 text-2xl">
+                  Details <IoIosArrowForward className="inline" />
+                </button>
               </div>
               <img
-                className="h-full flex-shrink-0 overflow-y-hidden object-cover"
-                src={bannerQuery.data?.[`anime${item.mal_id}`]?.bannerImage}
+                className="h-full flex-shrink-0 overflow-y-hidden mask-y-from-50% mask-x-from-90% md:h-[130%] md:-translate-y-1/6"
+                src={item.images.webp.large_image_url}
                 alt=""
               />
             </div>
           ))}
         </div>
+        //// {/* {bannerQuery?.data?.Page?.media.map((item) => ( */}
+        ////   <AnimeCard content={item} />
+        ////   // <div key={item.idMal} className="flex w-screen flex-shrink-0">
+        ////     // {/* // {/* <div className=""> */}
+        ////       // {/* // <p>{item.title.romaji}</p> */}
+        ////     // </div> */}
+        ////     // {/* // <img */}
+        ////       // {/* // className="h-full flex-shrink-0 object-cover" */}
+        ////       // {/* // src={item.bannerImage} */}
+        ////       // {/* // alt="" */}
+        ////     // {/* // /> */}
+        ////   // </div>
+        //// // {/* // ))} */}
       )}
     </>
   );

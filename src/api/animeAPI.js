@@ -110,3 +110,44 @@ export const getBannerById = async (idList) => {
     console.log(`There's an error: ${error}`);
   }
 };
+
+export const getPopularBanners = async () => {
+  const query = `
+    query {
+      Page(perPage: 5) {
+        media(season: SUMMER, seasonYear: 2025, type: ANIME, sort: POPULARITY_DESC) {
+          idMal
+          title {
+            romaji
+            english
+          }
+          bannerImage
+          coverImage {
+            large
+          }
+        }
+      }
+    }
+  `;
+
+  let url = "https://graphql.anilist.co",
+    options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        query: query,
+      }),
+    };
+
+  try {
+    const res = await fetch(url, options);
+    const data = await res.json();
+    // console.log(data.data);
+    return data.data;
+  } catch (error) {
+    console.log(`There's an error: ${error}`);
+  }
+};
