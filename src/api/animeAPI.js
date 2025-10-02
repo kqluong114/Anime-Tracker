@@ -63,7 +63,8 @@ export const getAnimeSearch = async ({
     throw new Error(`Error ${res.status}: ${res.statusText}`);
   }
   const data = await res.json();
-  // console.log(data);
+  console.log(data);
+  console.log(`${baseUrl}?${params.toString()}`);
   return data;
 };
 
