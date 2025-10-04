@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import AnimeOverviewCard from "../components/AnimeOverviewCard";
 import StaffSection from "../components/StaffSection";
+import { CharacterSection } from "../components/AnimePage/CharacterSection";
 
 function Anime() {
   const [data, setData] = useState({});
@@ -18,9 +19,7 @@ function Anime() {
         Authorization:
           "AAAAAAAADN8uAS62sGk-M_rzWC_cTlgz7UVJcT1DsWyxvSzgbD21oGd8pA",
       },
-    })
-      .then((res) => res.json())
-      .then((data) => console.log(data));
+    }).then((res) => res.json());
   }, [params]);
 
   useEffect(() => {
@@ -30,7 +29,8 @@ function Anime() {
   return data.title ? (
     <>
       <AnimeOverviewCard content={data} />
-      <StaffSection />
+      {/* <StaffSection mal_id={data.mal_id} /> */}
+      <CharacterSection mal_id={data?.mal_id} />
     </>
   ) : (
     <span>loading...</span>

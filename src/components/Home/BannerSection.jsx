@@ -144,11 +144,6 @@ export const BannerSection = () => {
             {popularQuery?.data?.data.map((element, index) => {
               return <BannerScrollButton key={element.mal_id} index={index} />;
             })}
-            {/* <BannerScrollButton key={0} index={0} />
-            <BannerScrollButton key={1} index={1} />
-            <BannerScrollButton key={2} index={2} />
-            <BannerScrollButton key={3} index={3} />
-            <BannerScrollButton key={4} index={4} /> */}
           </div>
         </div>
         //// {/* {bannerQuery?.data?.Page?.media.map((item) => ( */}
